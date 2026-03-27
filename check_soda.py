@@ -104,20 +104,21 @@ delta = (end_date - start_date).days   # returns timedelta
 # record intake for each day
 if delta > 0:
 	for i in range(delta):
-		# Get user input
-		day = start_date + datetime.timedelta(days=i)
-		amt = input(f"How many ounces of soda did you drink on {day}: ")
+		while True:
+			# Get user input
+			day = start_date + datetime.timedelta(days=i)
+			amt = input(f"How many ounces of soda did you drink on {day}: ")
 
-		# Validate input and record to database if valid
-		try:
-			assert float(amt) >= 0
-			record_to_db(day, amt, highest_id + 1 + i)
-			break
+			# Validate input and record to database if valid
+			try:
+				assert float(amt) >= 0
+				record_to_db(day, amt, highest_id + 1 + i)
+				break
 
-		# If invalid, re-prompt user
-		except Exception as e:
-			print(e)
-			print("Invalid value, amount must be a non-negative float")
+			# If invalid, re-prompt user
+			except Exception as e:
+				print(e)
+				print("Invalid value, amount must be a non-negative float")
 
 # If there are no missing days, let the user know
 else:
